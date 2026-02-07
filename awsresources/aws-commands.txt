@@ -1,0 +1,22 @@
+Create an IAM policy for deploy
+
+aws iam create-policy --policy-name MbumCalendarS3DeployPolicy --policy-document file://s3-deploy-policy.json
+
+Create GitHub OIDC provider (one-time per AWS account)
+
+aws iam create-open-id-connect-provider --url "https://token.actions.githubusercontent.com" --client-id-list "sts.amazonaws.com" --thumbprint-list "6938fd4d98bab03faadb97b34396831e3780aea1"
+
+Create an IAM role trusted by your GitHub repo
+Replace YOUR_GITHUB_ORG and YOUR_REPO
+
+aws iam create-role --role-name MbumCalendarGitHubDeployRole --assume-role-policy-document file://trust-policy.json
+
+Attach the deploy policy (use the ARN output from create-policy):
+
+aws iam attach-role-policy --role-name MbumCalendarGitHubDeployRole --policy-arn arn:aws:iam::904395999188:policy/MbumCalendarS3DeployPolicy
+
+
+aws_access_key_id = AKIA5FERTY7KMLPU7HSB
+aws_secret_access_key = 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
+
+

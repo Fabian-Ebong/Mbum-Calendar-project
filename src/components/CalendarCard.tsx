@@ -66,6 +66,11 @@ export default function CalendarCard({ data }: CalendarCardProps) {
               ({data.name})
             </span>{" "}
             {data.year}
+
+            {/* Mbum week explanation */}
+            <span className="block mt-1 text-lg sm:text-xl font-medium text-slate-300 italic">
+              Mbum week has 8 days, begins on Mrù' and ends on Yè.
+            </span>
         </CardTitle>
       </CardHeader>
 

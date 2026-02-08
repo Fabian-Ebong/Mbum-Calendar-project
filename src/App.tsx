@@ -40,7 +40,7 @@ function App() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 p-4 md:p-8">
+    <div className="min-h-screen bg-gray-50 px-3 py-4 sm:px-4 md:p-8 [padding-bottom:env(safe-area-inset-bottom)]">
       <div className="max-w-7xl mx-auto">
         {/* Header with Navigation and Search */}
         <header className="flex flex-col gap-6 mb-8">
@@ -55,7 +55,7 @@ function App() {
           </div>
 
           {/* Controls Section */}
-          <div className="flex flex-col md:flex-row items-center justify-center gap-4">
+          <div className="flex items-center gap-1 bg-white p-1 rounded-lg shadow-sm border border-gray-200 w-full md:w-auto justify-between">
             
             {/* Navigation Buttons */}
             <div className="flex items-center gap-1 bg-white p-1 rounded-lg shadow-sm border border-gray-200">
@@ -72,7 +72,7 @@ function App() {
               <Button
                 variant="ghost"
                 onClick={goToToday}
-                className="px-4 h-9 font-medium"
+                className="px-4 h-9 font-medium flex-1 md:flex-none"
               >
                 Today
               </Button>

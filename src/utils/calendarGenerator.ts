@@ -1,49 +1,52 @@
 import { MonthData } from "../types/calendar"
 
-// The 8-day cycle extracted from your provided data
-// Jan 1, 2026 (Thursday) is Index 0
+// ✅ Correct 8-day Mbum order (as you specified)
 const MBUM_CYCLE = [
-  "Ŋgàŋ",      // 0 (Corrected Spelling)
-  "Ŋtaala'",   // 1
-  "Sèŋ",       // 2
-  "Lì",        // 3
-  "Ŋkapyè",    // 4
-  "Yè",        // 5
-  "Mrù'",      // 6
-  "Ŋdʉŋ",      // 7
-]
+  "Mrù'",
+  "Ŋdʉŋ",
+  "Ŋgàŋ",
+  "Ŋtaala'",
+  "Sèŋ",
+  "Lì",
+  "Ŋkapyè",
+  "Yè",
+] as const
 
-// Anchor date: Jan 1, 2026 is "Ŋgàŋ" (Index 0)
-const ANCHOR_DATE = new Date("2026-01-01T00:00:00")
+// ✅ Anchor date: Sunday, Feb 8, 2026 corresponds to "Mrù'" (index 0)
+// Use UTC to avoid DST/timezone issues
+const ANCHOR_DATE_UTC = new Date(Date.UTC(2026, 1, 8)) // Feb = 1 (0-based month)
+
+const DAY_MS = 24 * 60 * 60 * 1000
+const ENGLISH_DAYS = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"] as const
+
+function toUTCDateOnly(d: Date) {
+  return new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()))
+}
+
+function diffDaysUTC(a: Date, b: Date) {
+  // whole-day difference (a - b) in UTC, safe across DST
+  return Math.round((toUTCDateOnly(a).getTime() - toUTCDateOnly(b).getTime()) / DAY_MS)
+}
 
 export function generateMonthData(year: number, month: number): MonthData {
   const daysInMonth = new Date(year, month + 1, 0).getDate()
-  const monthName = new Date(year, month).toLocaleString("default", {
-    month: "long",
-  })
+  const monthName = new Date(year, month, 1).toLocaleString("default", { month: "long" })
 
   const days = []
 
   for (let date = 1; date <= daysInMonth; date++) {
     const currentDateObj = new Date(year, month, date)
-    
-    // Calculate difference in days from anchor
-    const diffTime = currentDateObj.getTime() - ANCHOR_DATE.getTime()
-    const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24))
-    
-    // Calculate index in the 8-day cycle
-    // We handle negative modulo for dates before 2026
-    let cycleIndex = diffDays % 8
-    if (cycleIndex < 0) {
-      cycleIndex += 8
-    }
+
+    // ✅ Compute cycle index using UTC-safe day difference
+    const deltaDays = diffDaysUTC(currentDateObj, ANCHOR_DATE_UTC)
+
+    // ✅ Proper modulo that works for negative values too
+    const cycleIndex = ((deltaDays % 8) + 8) % 8
 
     const mbumDay = MBUM_CYCLE[cycleIndex]
-    const englishDay = currentDateObj.toLocaleString("default", {
-      weekday: "long",
-    })
-    
-    // Format YYYY-MM-DD for fullDate
+    const englishDay = ENGLISH_DAYS[currentDateObj.getDay()]
+
+    // Format YYYY-MM-DD
     const fullDate = `${year}-${String(month + 1).padStart(2, "0")}-${String(date).padStart(2, "0")}`
 
     days.push({

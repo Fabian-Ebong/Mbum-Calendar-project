@@ -2,9 +2,9 @@ import { MonthData, DayData } from "../types/calendar"
 
 // Mbum day names starting from Sunday
 const MBUM_DAYS = [
-  "Ŋdʉŋ",      // Sunday
+  "Ndʉŋ",      // Sunday
   "Ŋgaŋ",      // Monday
-  "Ŋtaala'",   // Tuesday
+  "Ntaala'",   // Tuesday
   "Ŋkapyè",    // Wednesday
   "Cɛɛrɛ",      // Thursday
   "Kɛɛzɛ̀r",    // Friday

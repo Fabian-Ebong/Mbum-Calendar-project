@@ -42,7 +42,7 @@ function App() {
               Mbum Calendar by Dr Ebong
             </h1>
             <h2 className="text-xl sm:text-2xl font-bold text-gray-400">
-              Dedicated to Hon Ester Ntalla
+              Dedicated to Hon. Esther Ntala Ngala
             </h2>
           </div>
 

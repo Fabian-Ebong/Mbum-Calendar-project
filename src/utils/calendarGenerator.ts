@@ -3,9 +3,9 @@ import { MonthData } from "../types/calendar"
 // ✅ Correct 8-day Mbum order (as you specified)
 const MBUM_CYCLE = [
   "Mrù'",
-  "Ŋdʉŋ",
+  "Ndʉŋ",
   "Ŋgàŋ",
-  "Ŋtaala'",
+  "Ntaala'",
   "Sèŋ",
   "Lì",
   "Ŋkapyè",

@@ -116,7 +116,7 @@ export default function CalendarCard({ data }: CalendarCardProps) {
                 <span
                   className={[
                     // Auto-scaling font
-                    "text-[clamp(15px,3.2vw,20px)] sm:text-[clamp(17px,1.6vw,22px)]",
+                    "text-[clamp(15px,3.2vw,20px)] sm:text-[clamp(17px,1.6vw,22px)] lg:text-[clamp(20px,1.2vw,26px)]",
                     // Bold + spacing
                     "font-extrabold tracking-wide leading-tight",
                     // Shadow for contrast

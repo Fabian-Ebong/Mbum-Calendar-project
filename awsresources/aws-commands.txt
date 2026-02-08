@@ -13,7 +13,7 @@ aws iam create-role --role-name MbumCalendarGitHubDeployRole --assume-role-polic
 
 Attach the deploy policy (use the ARN output from create-policy):
 
-aws iam attach-role-policy --role-name MbumCalendarGitHubDeployRole --policy-arn arn:aws:iam::904395999188:policy/MbumCalendarS3DeployPolicy
+aws iam attach-role-policy --role-name MbumCalendarGitHubDeployRole --policy-arn arn:aws:iam::804005416599:policy/MbumCalendarS3DeployPolicy
 
 
 

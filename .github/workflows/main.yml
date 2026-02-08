@@ -34,7 +34,7 @@ jobs:
       - name: Configure AWS credentials (OIDC)
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          role-to-assume: arn:aws:iam::YOUR_AWS_ACCOUNT_ID:role/MbumCalendarGitHubDeployRole
+          role-to-assume: arn:aws:iam::804005416599:role/MbumCalendarGitHubDeployRole
           aws-region: ${{ env.AWS_REGION }}
 
       - name: Sync to S3

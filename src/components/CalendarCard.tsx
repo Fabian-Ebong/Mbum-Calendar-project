@@ -56,22 +56,20 @@ export default function CalendarCard({ data }: CalendarCardProps) {
         // Subtle gradient surface
         "bg-gradient-to-b from-white to-slate-50",
       ].join(" ")}
-    >
+      > {/* Header title layout: Displays the Mbum month description, English month (in italics), and year. All text stays on a single line for visual cohesion
+        - Uses bold white text for prominence against the dark header
+      */}
       <CardHeader className="bg-slate-900 text-white pb-4 border-b border-slate-600 shadow-[inset_0_-2px_0_rgba(255,255,255,0.08)]">
-        {/* <CardTitle className="text-center text-lg sm:text-xl font-bold tracking-wide"> */}
-        <CardTitle className="text-center break-words leading-tight">
-
-          {/* Mbum description – BIGGER */}
-          <span className="block text-2xl sm:text-3xl lg:text-4xl font-extrabold text-white">
-            {description} 
-          <span className="block mt-1 text-lg sm:text-xl font-medium text-slate-300 italic"></span>
-            ({data.name}) {data.year}
-          </span>
+        <CardTitle className="text-center text-2xl sm:text-3xl lg:text-4xl font-extrabold text-white break-words">
+            {description}{" "}
+            <span className="italic">
+              ({data.name})
+            </span>{" "}
+            {data.year}
         </CardTitle>
       </CardHeader>
 
       <CardContent className="p-0">
-
         {/* Weekday Headers */}
         <div className="grid grid-cols-7 bg-slate-100 border-b border-slate-300 shadow-[inset_0_1px_0_rgba(255,255,255,0.9),inset_0_-1px_0_rgba(15,23,42,0.15)]">
           {WEEKDAYS_FULL.map((day, i) => (

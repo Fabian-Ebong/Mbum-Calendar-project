@@ -78,7 +78,6 @@ export default function CalendarCard({ data }: CalendarCardProps) {
               key={day}
               className={[
                 "py-2 text-center text-[10px] sm:text-xs font-bold text-slate-700",
-                // stronger separators
                 "border-r border-slate-300 last:border-r-0",
               ].join(" ")}
               title={day}
@@ -89,14 +88,17 @@ export default function CalendarCard({ data }: CalendarCardProps) {
           ))}
         </div>
 
-        {/* Calendar Grid with stronger lines */}
+        {/* Calendar Grid (framed + gaps between tiles) */}
         <div
           className={[
             "grid grid-cols-7",
-            // outer frame for grid
-            "bg-slate-200",
-            "p-[2px]",
-            // subtle inset frame shadow for 3D
+            // gaps create clear boundaries and a tile look
+            "gap-[3px] sm:gap-1",
+            // frame behind tiles
+            "bg-slate-300/70",
+            "p-[3px] sm:p-1",
+            "rounded-xl",
+            // inset frame depth
             "shadow-[inset_0_1px_0_rgba(255,255,255,0.9),inset_0_-2px_6px_rgba(15,23,42,0.18)]",
           ].join(" ")}
         >
@@ -105,12 +107,12 @@ export default function CalendarCard({ data }: CalendarCardProps) {
             <div
               key={`empty-${i}`}
               className={[
-                "bg-white",
                 "min-h-[74px] sm:min-h-28",
-                // grid lines
-                "border border-slate-300/80",
-                // 3D tile feel (subtle)
-                "shadow-[inset_0_1px_0_rgba(255,255,255,0.8)]",
+                // tile shape
+                "rounded-lg",
+                // subtle bevel
+                "bg-gradient-to-b from-white to-slate-50",
+                "shadow-[inset_0_1px_0_rgba(255,255,255,0.95)]",
               ].join(" ")}
             />
           ))}
@@ -123,15 +125,16 @@ export default function CalendarCard({ data }: CalendarCardProps) {
               <div
                 key={day.fullDate}
                 className={[
-                  "bg-white min-h-[74px] sm:min-h-28",
-                  "border border-slate-300/80",
+                  "min-h-[74px] sm:min-h-28",
+                  "rounded-lg",
                   "p-2 flex flex-col justify-between",
-                  // 3D tile + hover lift
-                  "shadow-[0_4px_10px_rgba(15,23,42,0.12),inset_0_1px_0_rgba(255,255,255,0.9)]",
+                  // tile bevel + depth
+                  "bg-gradient-to-b from-white to-slate-50",
+                  "shadow-[0_4px_10px_rgba(15,23,42,0.12),inset_0_1px_0_rgba(255,255,255,0.95)]",
                   "transition-all duration-200",
                   isToday
-                    ? "bg-blue-50 border-blue-300 ring-2 ring-blue-400/40 shadow-[0_10px_30px_rgba(37,99,235,0.35),inset_0_1px_0_rgba(255,255,255,0.9)]"
-                    : "hover:-translate-y-[1px] hover:shadow-[0_14px_30px_rgba(15,23,42,0.20),inset_0_1px_0_rgba(255,255,255,0.9)]",
+                    ? "bg-blue-50 ring-2 ring-blue-400/50 shadow-[0_18px_45px_rgba(37,99,235,0.28),inset_0_1px_0_rgba(255,255,255,0.95)]"
+                    : "hover:-translate-y-[2px] hover:shadow-[0_16px_30px_rgba(15,23,42,0.20),inset_0_1px_0_rgba(255,255,255,0.95)]",
                 ].join(" ")}
               >
                 {/* Date number */}

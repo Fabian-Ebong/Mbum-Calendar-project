@@ -49,14 +49,15 @@ export default function CalendarCard({ data }: CalendarCardProps) {
     <Card
       className={[
         "w-full max-w-6xl overflow-hidden",
-        // Strong boundary + 3D depth
-        "border border-slate-300/90 rounded-2xl",
-        "shadow-[0_18px_45px_rgba(15,23,42,0.25)]",
-        // subtle “bevel” feel
+        "rounded-2xl",
+        // Stronger boundary (ring) + real shadow depth
+        "ring-1 ring-slate-300/70",
+        "shadow-[0_25px_70px_rgba(15,23,42,0.35)]",
+        // Subtle gradient surface
         "bg-gradient-to-b from-white to-slate-50",
       ].join(" ")}
     >
-      <CardHeader className="bg-slate-900 text-white pb-4 border-b border-slate-800">
+      <CardHeader className="bg-slate-900 text-white pb-4 border-b border-slate-800 shadow-[inset_0_-2px_0_rgba(255,255,255,0.08)]">
         <CardTitle className="text-center text-lg sm:text-xl font-semibold tracking-wide">
           {data.name} {data.year}
         </CardTitle>
@@ -71,7 +72,7 @@ export default function CalendarCard({ data }: CalendarCardProps) {
         </div>
 
         {/* Weekday Headers */}
-        <div className="grid grid-cols-7 bg-slate-100 border-b border-slate-300">
+        <div className="grid grid-cols-7 bg-slate-100 border-b border-slate-300 shadow-[inset_0_1px_0_rgba(255,255,255,0.9),inset_0_-1px_0_rgba(15,23,42,0.15)]">
           {WEEKDAYS_FULL.map((day, i) => (
             <div
               key={day}
@@ -126,11 +127,11 @@ export default function CalendarCard({ data }: CalendarCardProps) {
                   "border border-slate-300/80",
                   "p-2 flex flex-col justify-between",
                   // 3D tile + hover lift
-                  "shadow-[0_2px_0_rgba(15,23,42,0.08),inset_0_1px_0_rgba(255,255,255,0.9)]",
+                  "shadow-[0_4px_10px_rgba(15,23,42,0.12),inset_0_1px_0_rgba(255,255,255,0.9)]",
                   "transition-all duration-200",
                   isToday
-                    ? "bg-blue-50 border-blue-300 shadow-[0_6px_18px_rgba(37,99,235,0.20),inset_0_1px_0_rgba(255,255,255,0.9)]"
-                    : "hover:-translate-y-[1px] hover:shadow-[0_10px_22px_rgba(15,23,42,0.18),inset_0_1px_0_rgba(255,255,255,0.9)]",
+                    ? "bg-blue-50 border-blue-300 ring-2 ring-blue-400/40 shadow-[0_10px_30px_rgba(37,99,235,0.35),inset_0_1px_0_rgba(255,255,255,0.9)]"
+                    : "hover:-translate-y-[1px] hover:shadow-[0_14px_30px_rgba(15,23,42,0.20),inset_0_1px_0_rgba(255,255,255,0.9)]",
                 ].join(" ")}
               >
                 {/* Date number */}

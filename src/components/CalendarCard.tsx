@@ -59,21 +59,21 @@ export default function CalendarCard({ data }: CalendarCardProps) {
     >
       <CardHeader className="bg-slate-900 text-white pb-4 border-b border-slate-600 shadow-[inset_0_-2px_0_rgba(255,255,255,0.08)]">
         {/* <CardTitle className="text-center text-lg sm:text-xl font-bold tracking-wide"> */}
-        <CardTitle className="text-center text-xl sm:text-2xl font-bold text-white break-words">
-          {description}{" "}
-          <em className="italic font-medium text-slate-300">
-            ({data.name})
-            </em>{" "}
+        <CardTitle className="text-center break-words leading-tight">
+          
+          {/* Mbum description – BIGGER */}
+          <span className="block text-2xl sm:text-3xl lg:text-4xl font-extrabold text-white">
+            {description}
+          </span>
+
+          {/* English month in italics */}
+          <span className="block mt-1 text-lg sm:text-xl font-medium text-slate-300 italic">
+            ({data.name}) {data.year}
+          </span>
         </CardTitle>
       </CardHeader>
 
       <CardContent className="p-0">
-        {/* Month Description */}
-        {/* <div className="px-3 sm:px-4 py-3 bg-white border-b border-slate-200">
-          <p className="text-center text-xl sm:text-2xl font-bold text-red-600 break-words">
-            {description}
-          </p>
-        </div> */}
 
         {/* Weekday Headers */}
         <div className="grid grid-cols-7 bg-slate-100 border-b border-slate-300 shadow-[inset_0_1px_0_rgba(255,255,255,0.9),inset_0_-1px_0_rgba(15,23,42,0.15)]">

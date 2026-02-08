@@ -4,13 +4,13 @@ import { MonthData } from "../types/calendar"
 // Jan 1, 2026 (Thursday) is Index 0
 const MBUM_CYCLE = [
   "Ŋgàŋ",      // 0 (Corrected Spelling)
-  "ŋtaala'",   // 1
+  "Ŋtaala'",   // 1
   "Sèŋ",       // 2
   "Lì",        // 3
-  "ŋkapyè",    // 4
+  "Ŋkapyè",    // 4
   "Yè",        // 5
   "Mrù'",      // 6
-  "ŋdʉŋ",      // 7
+  "Ŋdʉŋ",      // 7
 ]
 
 // Anchor date: Jan 1, 2026 is "Ŋgàŋ" (Index 0)

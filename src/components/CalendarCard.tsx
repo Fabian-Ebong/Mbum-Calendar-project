@@ -27,13 +27,13 @@ const WEEKDAYS_SHORT = ["S", "M", "T", "W", "T", "F", "S"]
 // Cultural color coding for Mbum days
 const MBUM_DAY_COLORS: Record<string, string> = {
   "Ŋgàŋ": "text-emerald-700",
-  "ŋtaala'": "text-indigo-700",
+  "Ŋtaala'": "text-indigo-700",
   "Sèŋ": "text-rose-700",
   "Lì": "text-amber-700",
-  "ŋkapyè": "text-teal-700",
+  "Ŋkapyè": "text-teal-700",
   "Yè": "text-blue-700",
   "Mrù'": "text-purple-700",
-  "ŋdʉŋ": "text-red-700",
+  "Ŋdʉŋ": "text-red-700",
 }
 
 function getMbumColor(mbumDay: string) {

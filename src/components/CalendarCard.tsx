@@ -60,14 +60,11 @@ export default function CalendarCard({ data }: CalendarCardProps) {
       <CardHeader className="bg-slate-900 text-white pb-4 border-b border-slate-600 shadow-[inset_0_-2px_0_rgba(255,255,255,0.08)]">
         {/* <CardTitle className="text-center text-lg sm:text-xl font-bold tracking-wide"> */}
         <CardTitle className="text-center break-words leading-tight">
-          
+
           {/* Mbum description – BIGGER */}
           <span className="block text-2xl sm:text-3xl lg:text-4xl font-extrabold text-white">
-            {description}
-          </span>
-
-          {/* English month in italics */}
-          <span className="block mt-1 text-lg sm:text-xl font-medium text-slate-300 italic">
+            {description} 
+          <span className="block mt-1 text-lg sm:text-xl font-medium text-slate-300 italic"></span>
             ({data.name}) {data.year}
           </span>
         </CardTitle>

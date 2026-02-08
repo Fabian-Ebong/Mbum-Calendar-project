@@ -3,6 +3,7 @@ export interface DayData {
   englishDay: string
   mbumDay: string
   fullDate: string
+  mbumIndex: number   // ✅ add this
 }
 
 export interface MonthData {

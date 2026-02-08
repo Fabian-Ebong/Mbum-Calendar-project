@@ -53,6 +53,7 @@ export function generateMonthData(year: number, month: number): MonthData {
       date,
       englishDay,
       mbumDay,
+      mbumIndex: cycleIndex,   // ✅ NEW (0..7)
       fullDate,
     })
   }

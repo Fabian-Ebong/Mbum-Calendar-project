@@ -24,6 +24,25 @@ const MONTH_DESCRIPTIONS: Record<string, string> = {
 const WEEKDAYS_FULL = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
 const WEEKDAYS_SHORT = ["S", "M", "T", "W", "T", "F", "S"]
 
+// Subtle week-block tints (repeats as blocks progress)
+const MBUM_WEEK_TINTS = [
+  "bg-slate-50",
+  "bg-blue-50",
+  "bg-emerald-50",
+  "bg-amber-50",
+  "bg-rose-50",
+  "bg-indigo-50",
+] as const
+
+function getWeekBlockTint(mbumIndex: number, dateNumber: number) {
+  // We want each block to start on Mrù' (mbumIndex 0)
+  // If the 1st of the month isn't Mrù', offset to align block boundaries.
+  const offsetToMru = (8 - (mbumIndex % 8)) % 8
+  const blockNumber = Math.floor((dateNumber - 1 + offsetToMru) / 8)
+
+  return MBUM_WEEK_TINTS[blockNumber % MBUM_WEEK_TINTS.length]
+}
+
 // Cultural color coding for Mbum days
 const MBUM_DAY_COLORS: Record<string, string> = {
   "Ŋgàŋ": "text-emerald-700",
@@ -124,20 +143,21 @@ export default function CalendarCard({ data }: CalendarCardProps) {
           {/* Days */}
           {data.days.map((day) => {
             const isToday = day.fullDate === todayStr
+            const weekTint = getWeekBlockTint(day.mbumIndex, day.date)
 
             return (
               <div
                 key={day.fullDate}
                 className={[
-                  "min-h-[74px] sm:min-h-28",
-                  "rounded-lg",
-                  "p-2 flex flex-col justify-between",
-                  // tile bevel + depth
-                  "bg-gradient-to-b from-white to-slate-50",
+                  "min-h-[74px] sm:min-h-28 rounded-lg p-2 flex flex-col justify-between",
+                  weekTint, // ✅ one tint per 8-day block
+                  // ✅ gradient overlay that DOES NOT kill the tint
+                  "bg-gradient-to-b from-white/40 to-transparent",
+                  // tile depth
                   "shadow-[0_4px_10px_rgba(15,23,42,0.12),inset_0_1px_0_rgba(255,255,255,0.95)]",
                   "transition-all duration-200",
                   isToday
-                    ? "bg-blue-50 ring-2 ring-blue-400/50 shadow-[0_18px_45px_rgba(37,99,235,0.28),inset_0_1px_0_rgba(255,255,255,0.95)]"
+                    ? "ring-2 ring-blue-400/70 shadow-[0_18px_45px_rgba(37,99,235,0.30),inset_0_1px_0_rgba(255,255,255,0.95)]"
                     : "hover:-translate-y-[2px] hover:shadow-[0_16px_30px_rgba(15,23,42,0.20),inset_0_1px_0_rgba(255,255,255,0.95)]",
                 ].join(" ")}
               >

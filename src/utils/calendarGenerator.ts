@@ -41,9 +41,10 @@ export function generateMonthData(year: number, month: number): MonthData {
     const deltaDays = diffDaysUTC(currentDateObj, ANCHOR_DATE_UTC)
 
     // ✅ Proper modulo that works for negative values too
-    const cycleIndex = ((deltaDays % 8) + 8) % 8
+    const mbumIndex = ((deltaDays % 8) + 8) % 8
+    const mbumBlock = Math.floor(deltaDays / 8) // ✅ same for all 8 days (Mrù'..Yè)
 
-    const mbumDay = MBUM_CYCLE[cycleIndex]
+    const mbumDay = MBUM_CYCLE[mbumIndex]
     const englishDay = ENGLISH_DAYS[currentDateObj.getDay()]
 
     // Format YYYY-MM-DD
@@ -53,7 +54,8 @@ export function generateMonthData(year: number, month: number): MonthData {
       date,
       englishDay,
       mbumDay,
-      mbumIndex: cycleIndex,   // ✅ NEW (0..7)
+      mbumIndex,     // 0..7
+      mbumBlock,     // ✅ block id for tinting
       fullDate,
     })
   }

@@ -25,7 +25,7 @@ const WEEKDAYS_FULL = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "
 const WEEKDAYS_SHORT = ["S", "M", "T", "W", "T", "F", "S"]
 
 // Subtle week-block tints (repeats as blocks progress)
-const MBUM_WEEK_TINTS = [
+const MBUM_BLOCK_TINTS = [
   "bg-slate-50",
   "bg-blue-50",
   "bg-emerald-50",
@@ -34,13 +34,9 @@ const MBUM_WEEK_TINTS = [
   "bg-indigo-50",
 ] as const
 
-function getWeekBlockTint(mbumIndex: number, dateNumber: number) {
-  // We want each block to start on Mrù' (mbumIndex 0)
-  // If the 1st of the month isn't Mrù', offset to align block boundaries.
-  const offsetToMru = (8 - (mbumIndex % 8)) % 8
-  const blockNumber = Math.floor((dateNumber - 1 + offsetToMru) / 8)
-
-  return MBUM_WEEK_TINTS[blockNumber % MBUM_WEEK_TINTS.length]
+function getBlockTint(mbumBlock: number) {
+  const i = ((mbumBlock % MBUM_BLOCK_TINTS.length) + MBUM_BLOCK_TINTS.length) % MBUM_BLOCK_TINTS.length
+  return MBUM_BLOCK_TINTS[i]
 }
 
 // Cultural color coding for Mbum days
@@ -143,14 +139,14 @@ export default function CalendarCard({ data }: CalendarCardProps) {
           {/* Days */}
           {data.days.map((day) => {
             const isToday = day.fullDate === todayStr
-            const weekTint = getWeekBlockTint(day.mbumIndex, day.date)
+            const blockTint = getBlockTint(day.mbumBlock)
 
             return (
               <div
                 key={day.fullDate}
                 className={[
                   "min-h-[74px] sm:min-h-28 rounded-lg p-2 flex flex-col justify-between",
-                  weekTint, // ✅ one tint per 8-day block
+                  blockTint, // ✅ one tint per 8-day block
                   // ✅ gradient overlay that DOES NOT kill the tint
                   "bg-gradient-to-b from-white/40 to-transparent",
                   // tile depth

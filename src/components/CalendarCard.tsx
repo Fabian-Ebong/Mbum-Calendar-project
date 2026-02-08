@@ -24,13 +24,29 @@ const MONTH_DESCRIPTIONS: Record<string, string> = {
 const WEEKDAYS_FULL = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
 const WEEKDAYS_SHORT = ["S", "M", "T", "W", "T", "F", "S"]
 
+// Cultural color coding for Mbum days
+const MBUM_DAY_COLORS: Record<string, string> = {
+  "Ŋgàŋ": "text-emerald-700",
+  "ŋtaala'": "text-indigo-700",
+  "Sèŋ": "text-rose-700",
+  "Lì": "text-amber-700",
+  "ŋkapyè": "text-teal-700",
+  "Yè": "text-blue-700",
+  "Mrù'": "text-purple-700",
+  "ŋdʉŋ": "text-red-700",
+}
+
+function getMbumColor(mbumDay: string) {
+  return MBUM_DAY_COLORS[mbumDay.trim()] ?? "text-blue-700"
+}
+
 export default function CalendarCard({ data }: CalendarCardProps) {
   const firstDayIndex = new Date(data.year, data.monthIndex, 1).getDay()
   const todayStr = new Date().toISOString().split("T")[0]
   const description = MONTH_DESCRIPTIONS[data.name]
 
   return (
-    <Card className="w-full max-w-5xl shadow-xl border-0 overflow-hidden">
+    <Card className="w-full max-w-6xl shadow-xl border-0 overflow-hidden">
       <CardHeader className="bg-slate-900 text-white pb-4">
         <CardTitle className="text-center text-lg sm:text-xl font-semibold tracking-wide">
           {data.name} {data.year}
@@ -39,22 +55,20 @@ export default function CalendarCard({ data }: CalendarCardProps) {
 
       <CardContent className="p-0">
         {/* Month Description */}
-        <div className="px-3 sm:px-4 py-3 bg-white border-b border-slate-100">
+        <div className="px-3 sm:px-4 py-3 bg-white border-b">
           <p className="text-center text-xl sm:text-2xl font-bold text-red-600 break-words">
             {description}
           </p>
         </div>
 
         {/* Weekday Headers */}
-        <div className="grid grid-cols-7 bg-slate-50 border-b border-black/10">
+        <div className="grid grid-cols-7 bg-slate-50 border-b">
           {WEEKDAYS_FULL.map((day, i) => (
             <div
               key={day}
               className="py-2 text-center text-[10px] sm:text-xs font-semibold text-slate-500"
               title={day}
-              aria-label={day}
             >
-              {/* short on mobile, full on larger screens */}
               <span className="sm:hidden">{WEEKDAYS_SHORT[i]}</span>
               <span className="hidden sm:inline">{day}</span>
             </div>
@@ -63,15 +77,15 @@ export default function CalendarCard({ data }: CalendarCardProps) {
 
         {/* Calendar Grid */}
         <div className="grid grid-cols-7 bg-white">
-          {/* Empty cells before the 1st */}
+          {/* Empty cells before first day */}
           {Array.from({ length: firstDayIndex }).map((_, i) => (
             <div
               key={`empty-${i}`}
-              className="min-h-[68px] sm:min-h-28 border border-black/10"
+              className="min-h-[70px] sm:min-h-28 border"
             />
           ))}
 
-          {/* Render days */}
+          {/* Days */}
           {data.days.map((day) => {
             const isToday = day.fullDate === todayStr
 
@@ -79,36 +93,46 @@ export default function CalendarCard({ data }: CalendarCardProps) {
               <div
                 key={day.fullDate}
                 className={[
-                  "min-h-[68px] sm:min-h-28 border border-black/10",
-                  "p-1.5 sm:p-2 flex flex-col justify-between",
-                  "transition-colors duration-200",
-                  isToday ? "bg-blue-50 border-blue-200" : "hover:bg-slate-50",
+                  "min-h-[70px] sm:min-h-28 border p-1.5 sm:p-2",
+                  "flex flex-col justify-between transition-colors",
+                  isToday
+                    ? "bg-blue-50 border-blue-300 shadow-[0_0_0_3px_rgba(37,99,235,0.15)]"
+                    : "hover:bg-slate-50",
                 ].join(" ")}
               >
-                <div className="flex items-start justify-between">
-                  <span
-                    className={[
-                      "text-sm sm:text-base font-semibold",
-                      isToday
-                        ? "bg-blue-600 text-white w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center rounded-full"
-                        : "text-slate-900",
-                    ].join(" ")}
-                  >
-                    {day.date}
-                  </span>
-                </div>
+                {/* Date number */}
+                <span
+                  className={[
+                    "text-sm sm:text-base font-semibold",
+                    isToday
+                      ? "bg-blue-600 text-white w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center rounded-full animate-pulse"
+                      : "text-slate-900",
+                  ].join(" ")}
+                >
+                  {day.date}
+                </span>
 
-                <div className="mt-1">
-                  <span
-                    className={[
-                      "block font-bold leading-tight",
-                      "text-[11px] sm:text-sm",
-                      isToday ? "text-blue-700" : "text-blue-600",
-                    ].join(" ")}
-                  >
-                    {day.mbumDay}
-                  </span>
-                </div>
+                {/* Mbum day name */}
+                <span
+                  className={[
+                    // Auto-scaling font
+                    "text-[clamp(12px,2.6vw,16px)] sm:text-[clamp(14px,1.2vw,18px)]",
+                    // Bold + spacing
+                    "font-extrabold tracking-wide leading-tight",
+                    // Shadow for contrast
+                    "drop-shadow-[0_1px_1px_rgba(0,0,0,0.35)]",
+                    // Cultural color
+                    getMbumColor(day.mbumDay),
+                    // Animate today
+                    isToday ? "animate-pulse" : "",
+                  ].join(" ")}
+                  style={{
+                    textShadow:
+                      "0 1px 0 rgba(255,255,255,0.95), 0 -1px 0 rgba(255,255,255,0.95), 1px 0 0 rgba(255,255,255,0.95), -1px 0 0 rgba(255,255,255,0.95)",
+                  }}
+                >
+                  {day.mbumDay}
+                </span>
               </div>
             )
           })}

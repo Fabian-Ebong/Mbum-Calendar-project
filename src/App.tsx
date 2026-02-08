@@ -47,7 +47,7 @@ function App() {
           
           {/* Title Section */}
           <div className="text-center">
-            <h1 className="text-3xl font-bold text-gray-900">Mbum Calendar</h1>
+            <h1 className="text-3xl font-bold text-gray-900">Mbum Calendar by Dr Ebong</h1>
             <p className="text-lg text-gray-600 font-medium">
               {monthData.name} {year}
             </p>

@@ -44,9 +44,6 @@ function App() {
             <h2 className="text-xl sm:text-2xl font-bold text-gray-400">
               Dedicated to Hon Ester Ntalla
             </h2>
-            <p className="text-base sm:text-lg text-gray-600 font-medium">
-              {monthData.name} {year}
-            </p>
           </div>
 
           {/* Controls Section (compact toolbar) */}

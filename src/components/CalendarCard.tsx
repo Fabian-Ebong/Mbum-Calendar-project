@@ -57,9 +57,9 @@ export default function CalendarCard({ data }: CalendarCardProps) {
         "bg-gradient-to-b from-white to-slate-50",
       ].join(" ")}
     >
-      <CardHeader className="bg-slate-900 text-white pb-4 border-b border-slate-800 shadow-[inset_0_-2px_0_rgba(255,255,255,0.08)]">
+      <CardHeader className="bg-slate-900 text-white pb-4 border-b border-slate-600 shadow-[inset_0_-2px_0_rgba(255,255,255,0.08)]">
         <CardTitle className="text-center text-lg sm:text-xl font-semibold tracking-wide">
-          {data.name} {data.year}
+          {description} {data.name} {data.year}
         </CardTitle>
       </CardHeader>
 

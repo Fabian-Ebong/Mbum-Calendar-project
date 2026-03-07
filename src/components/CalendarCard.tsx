@@ -1,4 +1,5 @@
 
+
 // import { MonthData } from "../types/calendar"
 // import { Card, CardContent, CardHeader, CardTitle } from "./ui/card"
 
@@ -85,11 +86,18 @@
 //   "NJEB TANG",
 //   "NJEB YAA",
 //   "MBUM",
-//   "ABEE YU NGER"
+//   "ABEE YU NGER",
 // ]
 
 // function getVillageForCell(cellIndex: number) {
 //   return MBUM_VILLAGES[cellIndex] ?? ""
+// }
+
+// function getVillageBadgeClass(village: string) {
+//   if (["NJEB WARR", "NJEB TANG", "NJEB YAA", "MBUM", "ABEE YU NGER", "Mbum Villages"].includes(village)) {
+//     return "bg-slate-900 text-white"
+//   }
+//   return "bg-amber-50 text-slate-800 border border-amber-200"
 // }
 
 // export default function CalendarCard({ data }: CalendarCardProps) {
@@ -152,7 +160,14 @@
 //                 className="min-h-[86px] sm:min-h-32 rounded-lg bg-white p-2 flex flex-col justify-end shadow-[inset_0_1px_0_rgba(255,255,255,0.95)]"
 //               >
 //                 {village && (
-//                   <span className="text-[11px] sm:text-xs font-semibold text-slate-600 leading-tight">
+//                   <span
+//                     className={[
+//                       "inline-block self-start px-2 py-1 rounded-md shadow-sm",
+//                       "text-[11px] sm:text-xs font-extrabold leading-tight",
+//                       "max-w-full break-words",
+//                       getVillageBadgeClass(village),
+//                     ].join(" ")}
+//                   >
 //                     {village}
 //                   </span>
 //                 )}
@@ -199,7 +214,14 @@
 //                 </div>
 
 //                 {village && (
-//                   <span className="mt-2 text-[11px] sm:text-xs font-semibold text-slate-600 leading-tight">
+//                   <span
+//                     className={[
+//                       "inline-block self-start mt-2 px-2 py-1 rounded-md shadow-sm",
+//                       "text-[11px] sm:text-xs font-extrabold leading-tight",
+//                       "max-w-full break-words",
+//                       getVillageBadgeClass(village),
+//                     ].join(" ")}
+//                   >
 //                     {village}
 //                   </span>
 //                 )}
@@ -218,7 +240,14 @@
 //                 className="min-h-[86px] sm:min-h-32 rounded-lg bg-white p-2 flex flex-col justify-end shadow-[inset_0_1px_0_rgba(255,255,255,0.95)]"
 //               >
 //                 {village && (
-//                   <span className="text-[11px] sm:text-xs font-semibold text-slate-600 leading-tight">
+//                   <span
+//                     className={[
+//                       "inline-block self-start px-2 py-1 rounded-md shadow-sm",
+//                       "text-[11px] sm:text-xs font-extrabold leading-tight",
+//                       "max-w-full break-words",
+//                       getVillageBadgeClass(village),
+//                     ].join(" ")}
+//                   >
 //                     {village}
 //                   </span>
 //                 )}
@@ -230,6 +259,9 @@
 //     </Card>
 //   )
 // }
+
+
+
 
 
 import { MonthData } from "../types/calendar"
@@ -321,14 +353,79 @@ const MBUM_VILLAGES = [
   "ABEE YU NGER",
 ]
 
+const WARR_VILLAGES = new Set([
+  "Binshua",
+  "Bongom",
+  "Chup",
+  "Nkambe",
+  "Kungi",
+  "Njap",
+  "Njirong",
+  "Bihnjeng",
+  "Ntumbaw",
+  "Nwangri",
+  "Mbaah",
+  "Mbot",
+  "Saah",
+  "Sop",
+  "Wat",
+])
+
+const TANG_VILLAGES = new Set([
+  "Bih",
+  "Binka",
+  "Kup",
+  "Ngarum",
+  "Ntundip",
+  "Sinna",
+  "Taku",
+  "Tabenken",
+  "Talla",
+])
+
+const YAA_VILLAGES = new Set([
+  "Konchep",
+  "Luh",
+  "Mbipgo",
+  "Ndu",
+  "Ngvulu",
+  "Njilah",
+  "Njimnkang",
+  "Nseh-Makop",
+  "Sehn",
+  "Wowo",
+])
+
+const SPECIAL_LABELS = new Set([
+  "Mbum Villages",
+  "NJEB WARR",
+  "NJEB TANG",
+  "NJEB YAA",
+  "MBUM",
+  "ABEE YU NGER",
+])
+
 function getVillageForCell(cellIndex: number) {
   return MBUM_VILLAGES[cellIndex] ?? ""
 }
 
 function getVillageBadgeClass(village: string) {
-  if (["NJEB WARR", "NJEB TANG", "NJEB YAA", "MBUM", "ABEE YU NGER", "Mbum Villages"].includes(village)) {
-    return "bg-slate-900 text-white"
+  if (SPECIAL_LABELS.has(village)) {
+    return "bg-slate-900 text-white border border-slate-800"
   }
+
+  if (WARR_VILLAGES.has(village)) {
+    return "bg-blue-50 text-blue-800 border border-blue-200"
+  }
+
+  if (TANG_VILLAGES.has(village)) {
+    return "bg-emerald-50 text-emerald-800 border border-emerald-200"
+  }
+
+  if (YAA_VILLAGES.has(village)) {
+    return "bg-rose-50 text-rose-800 border border-rose-200"
+  }
+
   return "bg-amber-50 text-slate-800 border border-amber-200"
 }
 

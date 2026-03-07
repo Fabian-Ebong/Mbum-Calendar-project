@@ -83,12 +83,14 @@ const MBUM_CYCLE = [
   "Yè",
 ] as const
 
-// New anchor date: March 1, 2026 = Lì
-// West African Time (WAT) = UTC+01:00
-const ANCHOR_DATE_WAT = new Date("2026-03-01T00:00:00+01:00")
-const ANCHOR_INDEX = 5 // "Lì"
+// Anchor date: February 8, 2026 = "Mrù'" in West African Time (WAT / UTC+1)
+const ANCHOR_YEAR = 2026
+const ANCHOR_MONTH = 1 // February (0-based)
+const ANCHOR_DAY = 8
+const ANCHOR_INDEX = 0 // "Mrù'"
 
 const DAY_MS = 24 * 60 * 60 * 1000
+const WAT_OFFSET_MINUTES = 60 // UTC+1
 
 const ENGLISH_DAYS = [
   "Sunday",
@@ -100,23 +102,33 @@ const ENGLISH_DAYS = [
   "Saturday",
 ] as const
 
-function toWATDateOnly(d: Date) {
-  // Shift to WAT (UTC+1), then strip time
-  const watOffsetMs = 1 * 60 * 60 * 1000
-  const shifted = new Date(d.getTime() + watOffsetMs)
-
-  return new Date(
-    Date.UTC(
-      shifted.getUTCFullYear(),
-      shifted.getUTCMonth(),
-      shifted.getUTCDate()
-    )
-  )
+/**
+ * Convert a JS Date into a "date-only" timestamp aligned to West African Time (UTC+1).
+ * This avoids device-local timezone drift and keeps the Mbum cycle anchored to WAT.
+ */
+function toWATDateOnlyTimestamp(date: Date) {
+  const utcTime = date.getTime()
+  const watTime = utcTime + WAT_OFFSET_MINUTES * 60 * 1000
+  return Math.floor(watTime / DAY_MS) * DAY_MS
 }
 
-function diffDaysWAT(a: Date, b: Date) {
+/**
+ * Build the anchor timestamp directly in WAT.
+ */
+function makeWATAnchorTimestamp(year: number, month: number, day: number) {
+  // Midnight in WAT is 23:00 UTC on the previous day
+  return Date.UTC(year, month, day, 0, -WAT_OFFSET_MINUTES, 0, 0)
+}
+
+const ANCHOR_TIMESTAMP = makeWATAnchorTimestamp(
+  ANCHOR_YEAR,
+  ANCHOR_MONTH,
+  ANCHOR_DAY
+)
+
+function diffDaysWAT(a: Date) {
   return Math.round(
-    (toWATDateOnly(a).getTime() - toWATDateOnly(b).getTime()) / DAY_MS
+    (toWATDateOnlyTimestamp(a) - ANCHOR_TIMESTAMP) / DAY_MS
   )
 }
 
@@ -131,10 +143,10 @@ export function generateMonthData(year: number, month: number): MonthData {
   for (let date = 1; date <= daysInMonth; date++) {
     const currentDateObj = new Date(year, month, date)
 
-    // Days from anchor using West African Time
-    const deltaDays = diffDaysWAT(currentDateObj, ANCHOR_DATE_WAT)
+    // Difference in whole days relative to the WAT anchor
+    const deltaDays = diffDaysWAT(currentDateObj)
 
-    // Cycle index anchored so March 1, 2026 = Lì
+    // Position inside the 8-day Mbum cycle
     const mbumIndex =
       ((ANCHOR_INDEX + deltaDays) % MBUM_CYCLE.length + MBUM_CYCLE.length) %
       MBUM_CYCLE.length

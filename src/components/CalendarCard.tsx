@@ -1,5 +1,4 @@
 
-
 // import { MonthData } from "../types/calendar"
 // import { Card, CardContent, CardHeader, CardTitle } from "./ui/card"
 
@@ -132,21 +131,24 @@
 //   "Wowo",
 // ])
 
-// const SPECIAL_LABELS = new Set([
-//   "Mbum Villages",
-//   "NJEB WARR",
-//   "NJEB TANG",
-//   "NJEB YAA",
-//   "MBUM",
-//   "ABEE YU NGER",
-// ])
-
 // function getVillageForCell(cellIndex: number) {
 //   return MBUM_VILLAGES[cellIndex] ?? ""
 // }
 
 // function getVillageBadgeClass(village: string) {
-//   if (SPECIAL_LABELS.has(village)) {
+//   if (village === "NJEB WARR") {
+//     return "bg-blue-100 text-blue-900 border border-blue-300"
+//   }
+
+//   if (village === "NJEB TANG") {
+//     return "bg-emerald-100 text-emerald-900 border border-emerald-300"
+//   }
+
+//   if (village === "NJEB YAA") {
+//     return "bg-rose-100 text-rose-900 border border-rose-300"
+//   }
+
+//   if (village === "MBUM" || village === "ABEE YU NGER" || village === "Mbum Villages") {
 //     return "bg-slate-900 text-white border border-slate-800"
 //   }
 
@@ -327,7 +329,6 @@
 
 
 
-
 import { MonthData } from "../types/calendar"
 import { Card, CardContent, CardHeader, CardTitle } from "./ui/card"
 
@@ -413,7 +414,13 @@ const MBUM_VILLAGES = [
   "NJEB WARR",
   "NJEB TANG",
   "NJEB YAA",
-  "MBUM",
+  `Mbum Village features:
+1. People
+2. Fon
+3. Palace
+5. Land
+6. Nwarong
+7. Sabath day`,
   "ABEE YU NGER",
 ]
 
@@ -465,6 +472,10 @@ function getVillageForCell(cellIndex: number) {
 }
 
 function getVillageBadgeClass(village: string) {
+  if (village.startsWith("Mbum Village features:")) {
+    return "bg-slate-900 text-white border border-slate-800"
+  }
+
   if (village === "NJEB WARR") {
     return "bg-blue-100 text-blue-900 border border-blue-300"
   }
@@ -560,7 +571,7 @@ export default function CalendarCard({ data }: CalendarCardProps) {
                     className={[
                       "inline-block self-start px-2 py-1 rounded-md shadow-sm",
                       "text-[11px] sm:text-xs font-extrabold leading-tight",
-                      "max-w-full break-words",
+                      "max-w-full break-words whitespace-pre-line",
                       getVillageBadgeClass(village),
                     ].join(" ")}
                   >
@@ -614,7 +625,7 @@ export default function CalendarCard({ data }: CalendarCardProps) {
                     className={[
                       "inline-block self-start mt-2 px-2 py-1 rounded-md shadow-sm",
                       "text-[11px] sm:text-xs font-extrabold leading-tight",
-                      "max-w-full break-words",
+                      "max-w-full break-words whitespace-pre-line",
                       getVillageBadgeClass(village),
                     ].join(" ")}
                   >
@@ -640,7 +651,7 @@ export default function CalendarCard({ data }: CalendarCardProps) {
                     className={[
                       "inline-block self-start px-2 py-1 rounded-md shadow-sm",
                       "text-[11px] sm:text-xs font-extrabold leading-tight",
-                      "max-w-full break-words",
+                      "max-w-full break-words whitespace-pre-line",
                       getVillageBadgeClass(village),
                     ].join(" ")}
                   >

@@ -199,6 +199,147 @@
 //   )
 // }
 
+// New code for 8 days column//
+
+// import { MonthData } from "../types/calendar"
+// import { Card, CardContent, CardHeader, CardTitle } from "./ui/card"
+
+// interface CalendarCardProps {
+//   data: MonthData
+// }
+
+// const MONTH_DESCRIPTIONS: Record<string, string> = {
+//   January: "Ŋwɛɛ Ŋkàr Bkwâa",
+//   February: "Ŋwɛɛ Ntòo Bfòo",
+//   March: "Ŋwɛɛ Mbèŋ",
+//   April: "Ŋwɛɛ Msuu",
+//   May: "Ŋwɛɛ Nsʉsi Bkwâa",
+//   June: "Ŋwɛɛ Ncoʼ Mkuu",
+//   July: "Ŋwɛɛ Nye Bkwâa",
+//   August: "Ŋwɛɛ Ŋkep Bkwâa",
+//   September: "Ŋwɛɛ Ncoʼ Berɛŋ",
+//   October: "Ŋwɛɛ Saa",
+//   November: "Ŋwɛɛ Lùu",
+//   December: "Ŋwɛɛ Ŋkàʼ",
+// }
+
+// // 8-column Mbum week headers
+// const MBUM_HEADERS = [
+//   "Mrù'",
+//   "Ndʉŋ",
+//   "Ŋgàŋ",
+//   "Ntaala'",
+//   "Sèŋ",
+//   "Lì",
+//   "Ŋkapyè",
+//   "Yè",
+// ]
+
+// const MBUM_BLOCK_TINTS = [
+//   "bg-slate-50",
+//   "bg-blue-50",
+//   "bg-emerald-50",
+//   "bg-amber-50",
+//   "bg-rose-50",
+//   "bg-indigo-50",
+// ] as const
+
+// function getBlockTint(mbumBlock: number) {
+//   const i =
+//     ((mbumBlock % MBUM_BLOCK_TINTS.length) + MBUM_BLOCK_TINTS.length) %
+//     MBUM_BLOCK_TINTS.length
+//   return MBUM_BLOCK_TINTS[i]
+// }
+
+// export default function CalendarCard({ data }: CalendarCardProps) {
+//   const firstMbumIndex = data.days[0]?.mbumIndex ?? 0
+//   const todayStr = new Date().toISOString().split("T")[0]
+//   const description = MONTH_DESCRIPTIONS[data.name]
+
+//   return (
+//     <Card className="w-full max-w-7xl rounded-2xl overflow-hidden ring-1 ring-slate-300 shadow-[0_30px_80px_rgba(15,23,42,0.45)] bg-gradient-to-b from-white to-slate-50">
+//       <CardHeader className="bg-slate-900 text-white pb-4 border-b border-slate-600 shadow-[inset_0_-2px_0_rgba(255,255,255,0.08)]">
+//         <CardTitle className="text-center text-2xl sm:text-3xl lg:text-4xl font-extrabold text-white break-words">
+//           {description}{" "}
+//           <span className="italic">({data.name})</span>{" "}
+//           {data.year}
+//           <span className="block mt-1 text-lg sm:text-xl font-medium text-slate-300 italic">
+//             Mbum week has 8 days, begins on Mrù' and ends on Yè.
+//           </span>
+//         </CardTitle>
+//       </CardHeader>
+
+//       <CardContent className="p-0">
+//         {/* 8-column Mbum headers */}
+//         <div className="grid grid-cols-8 bg-slate-100 border-b border-slate-300">
+//           {MBUM_HEADERS.map((day) => (
+//             <div
+//               key={day}
+//               className="py-2 px-1 text-center text-[11px] sm:text-sm font-bold text-slate-700 border-r border-slate-300 last:border-r-0"
+//               title={day}
+//             >
+//               {day}
+//             </div>
+//           ))}
+//         </div>
+
+//         {/* 8-column calendar grid */}
+//         <div className="grid grid-cols-8 gap-[3px] sm:gap-1 bg-slate-300/70 p-[3px] sm:p-1 rounded-xl shadow-[inset_0_1px_0_rgba(255,255,255,0.9),inset_0_-2px_6px_rgba(15,23,42,0.18)]">
+//           {/* Empty cells before first day based on Mbum index */}
+//           {Array.from({ length: firstMbumIndex }).map((_, i) => (
+//             <div
+//               key={`empty-${i}`}
+//               className="min-h-[86px] sm:min-h-32 rounded-lg bg-gradient-to-b from-white to-slate-50 shadow-[inset_0_1px_0_rgba(255,255,255,0.95)]"
+//             />
+//           ))}
+
+//           {/* Days */}
+//           {data.days.map((day) => {
+//             const isToday = day.fullDate === todayStr
+//             const blockTint = getBlockTint(day.mbumBlock)
+
+//             return (
+//               <div
+//                 key={day.fullDate}
+//                 className={[
+//                   "min-h-[86px] sm:min-h-32 rounded-lg p-2 flex flex-col justify-between",
+//                   blockTint,
+//                   "bg-gradient-to-b from-white/40 to-transparent",
+//                   "shadow-[0_4px_10px_rgba(15,23,42,0.12),inset_0_1px_0_rgba(255,255,255,0.95)]",
+//                   "transition-all duration-200",
+//                   isToday
+//                     ? "ring-2 ring-blue-400/70 shadow-[0_18px_45px_rgba(37,99,235,0.30),inset_0_1px_0_rgba(255,255,255,0.95)]"
+//                     : "hover:-translate-y-[2px] hover:shadow-[0_16px_30px_rgba(15,23,42,0.20),inset_0_1px_0_rgba(255,255,255,0.95)]",
+//                 ].join(" ")}
+//               >
+//                 <div className="flex items-start justify-between gap-1">
+//                   {/* Gregorian date */}
+//                   <span
+//                     className={[
+//                       "text-sm sm:text-base font-semibold",
+//                       isToday
+//                         ? "bg-blue-600 text-white w-8 h-8 flex items-center justify-center rounded-full animate-pulse"
+//                         : "text-slate-900",
+//                     ].join(" ")}
+//                   >
+//                     {day.date}
+//                   </span>
+
+//                   {/* English weekday */}
+//                   <span className="text-[10px] sm:text-xs font-medium text-slate-500 text-right leading-tight">
+//                     {day.englishDay}
+//                   </span>
+//                 </div>
+//               </div>
+//             )
+//           })}
+//         </div>
+//       </CardContent>
+//     </Card>
+//   )
+// }
+
+
 import { MonthData } from "../types/calendar"
 import { Card, CardContent, CardHeader, CardTitle } from "./ui/card"
 
@@ -221,7 +362,7 @@ const MONTH_DESCRIPTIONS: Record<string, string> = {
   December: "Ŋwɛɛ Ŋkàʼ",
 }
 
-// 8-column Mbum week headers
+// 8 Mbum days = 8 columns
 const MBUM_HEADERS = [
   "Mrù'",
   "Ndʉŋ",
@@ -233,22 +374,6 @@ const MBUM_HEADERS = [
   "Yè",
 ]
 
-const MBUM_BLOCK_TINTS = [
-  "bg-slate-50",
-  "bg-blue-50",
-  "bg-emerald-50",
-  "bg-amber-50",
-  "bg-rose-50",
-  "bg-indigo-50",
-] as const
-
-function getBlockTint(mbumBlock: number) {
-  const i =
-    ((mbumBlock % MBUM_BLOCK_TINTS.length) + MBUM_BLOCK_TINTS.length) %
-    MBUM_BLOCK_TINTS.length
-  return MBUM_BLOCK_TINTS[i]
-}
-
 export default function CalendarCard({ data }: CalendarCardProps) {
   const firstMbumIndex = data.days[0]?.mbumIndex ?? 0
   const todayStr = new Date().toISOString().split("T")[0]
@@ -256,11 +381,13 @@ export default function CalendarCard({ data }: CalendarCardProps) {
 
   return (
     <Card className="w-full max-w-7xl rounded-2xl overflow-hidden ring-1 ring-slate-300 shadow-[0_30px_80px_rgba(15,23,42,0.45)] bg-gradient-to-b from-white to-slate-50">
+
       <CardHeader className="bg-slate-900 text-white pb-4 border-b border-slate-600 shadow-[inset_0_-2px_0_rgba(255,255,255,0.08)]">
         <CardTitle className="text-center text-2xl sm:text-3xl lg:text-4xl font-extrabold text-white break-words">
           {description}{" "}
           <span className="italic">({data.name})</span>{" "}
           {data.year}
+
           <span className="block mt-1 text-lg sm:text-xl font-medium text-slate-300 italic">
             Mbum week has 8 days, begins on Mrù' and ends on Yè.
           </span>
@@ -268,49 +395,49 @@ export default function CalendarCard({ data }: CalendarCardProps) {
       </CardHeader>
 
       <CardContent className="p-0">
-        {/* 8-column Mbum headers */}
+
+        {/* Mbum headers */}
         <div className="grid grid-cols-8 bg-slate-100 border-b border-slate-300">
           {MBUM_HEADERS.map((day) => (
             <div
               key={day}
               className="py-2 px-1 text-center text-[11px] sm:text-sm font-bold text-slate-700 border-r border-slate-300 last:border-r-0"
-              title={day}
             >
               {day}
             </div>
           ))}
         </div>
 
-        {/* 8-column calendar grid */}
+        {/* Calendar grid */}
         <div className="grid grid-cols-8 gap-[3px] sm:gap-1 bg-slate-300/70 p-[3px] sm:p-1 rounded-xl shadow-[inset_0_1px_0_rgba(255,255,255,0.9),inset_0_-2px_6px_rgba(15,23,42,0.18)]">
-          {/* Empty cells before first day based on Mbum index */}
+
+          {/* Empty cells before first day */}
           {Array.from({ length: firstMbumIndex }).map((_, i) => (
             <div
               key={`empty-${i}`}
-              className="min-h-[86px] sm:min-h-32 rounded-lg bg-gradient-to-b from-white to-slate-50 shadow-[inset_0_1px_0_rgba(255,255,255,0.95)]"
+              className="min-h-[86px] sm:min-h-32 rounded-lg bg-white shadow-[inset_0_1px_0_rgba(255,255,255,0.95)]"
             />
           ))}
 
-          {/* Days */}
+          {/* Date cells */}
           {data.days.map((day) => {
             const isToday = day.fullDate === todayStr
-            const blockTint = getBlockTint(day.mbumBlock)
 
             return (
               <div
                 key={day.fullDate}
                 className={[
                   "min-h-[86px] sm:min-h-32 rounded-lg p-2 flex flex-col justify-between",
-                  blockTint,
-                  "bg-gradient-to-b from-white/40 to-transparent",
+                  "bg-white",
                   "shadow-[0_4px_10px_rgba(15,23,42,0.12),inset_0_1px_0_rgba(255,255,255,0.95)]",
                   "transition-all duration-200",
                   isToday
-                    ? "ring-2 ring-blue-400/70 shadow-[0_18px_45px_rgba(37,99,235,0.30),inset_0_1px_0_rgba(255,255,255,0.95)]"
-                    : "hover:-translate-y-[2px] hover:shadow-[0_16px_30px_rgba(15,23,42,0.20),inset_0_1px_0_rgba(255,255,255,0.95)]",
+                    ? "ring-2 ring-blue-400 shadow-[0_18px_45px_rgba(37,99,235,0.30)]"
+                    : "hover:-translate-y-[2px] hover:shadow-[0_16px_30px_rgba(15,23,42,0.20)]",
                 ].join(" ")}
               >
                 <div className="flex items-start justify-between gap-1">
+
                   {/* Gregorian date */}
                   <span
                     className={[
@@ -327,11 +454,13 @@ export default function CalendarCard({ data }: CalendarCardProps) {
                   <span className="text-[10px] sm:text-xs font-medium text-slate-500 text-right leading-tight">
                     {day.englishDay}
                   </span>
+
                 </div>
               </div>
             )
           })}
         </div>
+
       </CardContent>
     </Card>
   )

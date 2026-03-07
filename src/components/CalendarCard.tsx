@@ -233,17 +233,6 @@ const MBUM_HEADERS = [
   "Yè",
 ]
 
-const MBUM_DAY_COLORS: Record<string, string> = {
-  "Mrù'": "text-purple-700",
-  "Ndʉŋ": "text-red-700",
-  "Ŋgàŋ": "text-emerald-700",
-  "Ntaala'": "text-indigo-700",
-  "Sèŋ": "text-rose-700",
-  "Lì": "text-amber-700",
-  "Ŋkapyè": "text-teal-700",
-  "Yè": "text-blue-700",
-}
-
 const MBUM_BLOCK_TINTS = [
   "bg-slate-50",
   "bg-blue-50",
@@ -253,10 +242,6 @@ const MBUM_BLOCK_TINTS = [
   "bg-indigo-50",
 ] as const
 
-function getMbumColor(mbumDay: string) {
-  return MBUM_DAY_COLORS[mbumDay.trim()] ?? "text-blue-700"
-}
-
 function getBlockTint(mbumBlock: number) {
   const i =
     ((mbumBlock % MBUM_BLOCK_TINTS.length) + MBUM_BLOCK_TINTS.length) %
@@ -265,7 +250,6 @@ function getBlockTint(mbumBlock: number) {
 }
 
 export default function CalendarCard({ data }: CalendarCardProps) {
-  // ✅ Start month under the correct Mbum-day column
   const firstMbumIndex = data.days[0]?.mbumIndex ?? 0
   const todayStr = new Date().toISOString().split("T")[0]
   const description = MONTH_DESCRIPTIONS[data.name]
@@ -339,28 +323,11 @@ export default function CalendarCard({ data }: CalendarCardProps) {
                     {day.date}
                   </span>
 
-                  {/* English weekday inside body */}
+                  {/* English weekday */}
                   <span className="text-[10px] sm:text-xs font-medium text-slate-500 text-right leading-tight">
                     {day.englishDay}
                   </span>
                 </div>
-
-                {/* Mbum day name inside body */}
-                <span
-                  className={[
-                    "font-extrabold tracking-wide leading-tight",
-                    "text-[clamp(14px,2.4vw,18px)] sm:text-[clamp(16px,1.2vw,22px)]",
-                    "drop-shadow-[0_1px_1px_rgba(0,0,0,0.35)]",
-                    getMbumColor(day.mbumDay),
-                    isToday ? "animate-pulse" : "",
-                  ].join(" ")}
-                  style={{
-                    textShadow:
-                      "0 1px 0 rgba(255,255,255,0.95), 0 -1px 0 rgba(255,255,255,0.95), 1px 0 0 rgba(255,255,255,0.95), -1px 0 0 rgba(255,255,255,0.95)",
-                  }}
-                >
-                  {day.mbumDay}
-                </span>
               </div>
             )
           })}

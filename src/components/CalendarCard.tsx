@@ -346,6 +346,7 @@ const MBUM_HEADER_COLORS: Record<string, string> = {
 
 // Hard-coded village assignment by visible cell position (1 village per cell)
 const MBUM_VILLAGES = [
+  "Mbum Villages",
   "Binshua",
   "Bongom",
   "Chup",
@@ -380,6 +381,11 @@ const MBUM_VILLAGES = [
   "Nseh-Makop",
   "Sehn",
   "Wowo",
+  "NJEB WARR",
+  "NJEB TANG",
+  "NJEB YAA",
+  "MBUM",
+  "ABEE YU NGER"
 ]
 
 function getVillageForCell(cellIndex: number) {

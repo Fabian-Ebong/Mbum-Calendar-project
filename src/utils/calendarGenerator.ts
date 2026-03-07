@@ -83,12 +83,13 @@ const MBUM_CYCLE = [
   "Yè",
 ] as const
 
-// Anchor date: March 1, 2026 corresponds to "Lì" (index 5)
-// Use UTC to avoid DST/timezone issues
-const ANCHOR_DATE_UTC = new Date(Date.UTC(2026, 2, 1)) // March = 2 (0-based month)
+// New anchor date: March 1, 2026 = Lì
+// West African Time (WAT) = UTC+01:00
+const ANCHOR_DATE_WAT = new Date("2026-03-01T00:00:00+01:00")
 const ANCHOR_INDEX = 5 // "Lì"
 
 const DAY_MS = 24 * 60 * 60 * 1000
+
 const ENGLISH_DAYS = [
   "Sunday",
   "Monday",
@@ -99,14 +100,23 @@ const ENGLISH_DAYS = [
   "Saturday",
 ] as const
 
-function toUTCDateOnly(d: Date) {
-  return new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()))
+function toWATDateOnly(d: Date) {
+  // Shift to WAT (UTC+1), then strip time
+  const watOffsetMs = 1 * 60 * 60 * 1000
+  const shifted = new Date(d.getTime() + watOffsetMs)
+
+  return new Date(
+    Date.UTC(
+      shifted.getUTCFullYear(),
+      shifted.getUTCMonth(),
+      shifted.getUTCDate()
+    )
+  )
 }
 
-function diffDaysUTC(a: Date, b: Date) {
-  // whole-day difference (a - b) in UTC, safe across DST
+function diffDaysWAT(a: Date, b: Date) {
   return Math.round(
-    (toUTCDateOnly(a).getTime() - toUTCDateOnly(b).getTime()) / DAY_MS
+    (toWATDateOnly(a).getTime() - toWATDateOnly(b).getTime()) / DAY_MS
   )
 }
 
@@ -121,12 +131,13 @@ export function generateMonthData(year: number, month: number): MonthData {
   for (let date = 1; date <= daysInMonth; date++) {
     const currentDateObj = new Date(year, month, date)
 
-    // Days from anchor
-    const deltaDays = diffDaysUTC(currentDateObj, ANCHOR_DATE_UTC)
+    // Days from anchor using West African Time
+    const deltaDays = diffDaysWAT(currentDateObj, ANCHOR_DATE_WAT)
 
-    // Cycle index adjusted so anchor maps to Lì
+    // Cycle index anchored so March 1, 2026 = Lì
     const mbumIndex =
-      ((ANCHOR_INDEX + deltaDays) % 8 + 8) % 8
+      ((ANCHOR_INDEX + deltaDays) % MBUM_CYCLE.length + MBUM_CYCLE.length) %
+      MBUM_CYCLE.length
 
     // 8-day block id for tinting
     const mbumBlock = Math.floor(deltaDays / 8)
@@ -134,8 +145,9 @@ export function generateMonthData(year: number, month: number): MonthData {
     const mbumDay = MBUM_CYCLE[mbumIndex]
     const englishDay = ENGLISH_DAYS[currentDateObj.getDay()]
 
-    // Format YYYY-MM-DD
-    const fullDate = `${year}-${String(month + 1).padStart(2, "0")}-${String(date).padStart(2, "0")}`
+    const fullDate = `${year}-${String(month + 1).padStart(2, "0")}-${String(
+      date
+    ).padStart(2, "0")}`
 
     days.push({
       date,

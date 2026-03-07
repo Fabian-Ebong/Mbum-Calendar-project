@@ -344,7 +344,6 @@ const MBUM_HEADER_COLORS: Record<string, string> = {
   "Yè": "text-blue-700",
 }
 
-// One village per 8-day Mbum block, in the exact order provided
 const MBUM_VILLAGES = [
   "Binshua",
   "Bongom",
@@ -382,11 +381,8 @@ const MBUM_VILLAGES = [
   "Wowo",
 ]
 
-function getVillageForBlock(mbumBlock: number) {
-  const index =
-    ((mbumBlock % MBUM_VILLAGES.length) + MBUM_VILLAGES.length) %
-    MBUM_VILLAGES.length
-  return MBUM_VILLAGES[index]
+function getVillageForCell(index: number) {
+  return MBUM_VILLAGES[index % MBUM_VILLAGES.length]
 }
 
 export default function CalendarCard({ data }: CalendarCardProps) {
@@ -448,9 +444,9 @@ export default function CalendarCard({ data }: CalendarCardProps) {
           ))}
 
           {/* Date cells */}
-          {data.days.map((day) => {
+          {data.days.map((day, index) => {
             const isToday = day.fullDate === todayStr
-            const village = getVillageForBlock(day.mbumBlock)
+            const village = getVillageForCell(index)
 
             return (
               <div
@@ -484,7 +480,7 @@ export default function CalendarCard({ data }: CalendarCardProps) {
                   </span>
                 </div>
 
-                {/* Village for this 8-day Mbum block */}
+                {/* Village name */}
                 <span className="mt-2 text-[11px] sm:text-xs font-semibold text-slate-600 leading-tight">
                   {village}
                 </span>

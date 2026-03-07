@@ -39,7 +39,7 @@ function App() {
           {/* Title Section */}
           <div className="text-center">
             <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">
-              Mbum Calendar by Dr Ebong
+              Bŋwɛɛ ba bŋoŋ Mbum (Calendar) by Dr Ebong
             </h1>
             <h2 className="text-xl sm:text-2xl font-bold text-gray-400">
               Dedicated to Hon. Esther Ntala Ngala

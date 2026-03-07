@@ -344,6 +344,7 @@ const MBUM_HEADER_COLORS: Record<string, string> = {
   "Yè": "text-blue-700",
 }
 
+// Hard-coded village assignment by visible cell position (1 village per cell)
 const MBUM_VILLAGES = [
   "Binshua",
   "Bongom",
@@ -381,8 +382,8 @@ const MBUM_VILLAGES = [
   "Wowo",
 ]
 
-function getVillageForCell(index: number) {
-  return MBUM_VILLAGES[index % MBUM_VILLAGES.length]
+function getVillageForCell(cellIndex: number) {
+  return MBUM_VILLAGES[cellIndex] ?? ""
 }
 
 export default function CalendarCard({ data }: CalendarCardProps) {
@@ -436,17 +437,28 @@ export default function CalendarCard({ data }: CalendarCardProps) {
         {/* Calendar grid */}
         <div className="grid grid-cols-8 gap-[3px] sm:gap-1 bg-slate-300/70 p-[3px] sm:p-1 rounded-xl shadow-[inset_0_1px_0_rgba(255,255,255,0.9),inset_0_-2px_6px_rgba(15,23,42,0.18)]">
           {/* Empty cells before first day */}
-          {Array.from({ length: firstMbumIndex }).map((_, i) => (
-            <div
-              key={`empty-${i}`}
-              className="min-h-[86px] sm:min-h-32 rounded-lg bg-white shadow-[inset_0_1px_0_rgba(255,255,255,0.95)]"
-            />
-          ))}
+          {Array.from({ length: firstMbumIndex }).map((_, i) => {
+            const village = getVillageForCell(i)
+
+            return (
+              <div
+                key={`empty-${i}`}
+                className="min-h-[86px] sm:min-h-32 rounded-lg bg-white p-2 flex flex-col justify-end shadow-[inset_0_1px_0_rgba(255,255,255,0.95)]"
+              >
+                {village && (
+                  <span className="text-[11px] sm:text-xs font-semibold text-slate-600 leading-tight">
+                    {village}
+                  </span>
+                )}
+              </div>
+            )
+          })}
 
           {/* Date cells */}
           {data.days.map((day, index) => {
             const isToday = day.fullDate === todayStr
-            const village = getVillageForCell(index)
+            const cellIndex = firstMbumIndex + index
+            const village = getVillageForCell(cellIndex)
 
             return (
               <div
@@ -480,21 +492,33 @@ export default function CalendarCard({ data }: CalendarCardProps) {
                   </span>
                 </div>
 
-                {/* Village name */}
-                <span className="mt-2 text-[11px] sm:text-xs font-semibold text-slate-600 leading-tight">
-                  {village}
-                </span>
+                {village && (
+                  <span className="mt-2 text-[11px] sm:text-xs font-semibold text-slate-600 leading-tight">
+                    {village}
+                  </span>
+                )}
               </div>
             )
           })}
 
           {/* Empty cells after last day so every month has 8 columns × 5 rows */}
-          {Array.from({ length: trailingEmptyCells }).map((_, i) => (
-            <div
-              key={`trailing-empty-${i}`}
-              className="min-h-[86px] sm:min-h-32 rounded-lg bg-white shadow-[inset_0_1px_0_rgba(255,255,255,0.95)]"
-            />
-          ))}
+          {Array.from({ length: trailingEmptyCells }).map((_, i) => {
+            const cellIndex = firstMbumIndex + data.days.length + i
+            const village = getVillageForCell(cellIndex)
+
+            return (
+              <div
+                key={`trailing-empty-${i}`}
+                className="min-h-[86px] sm:min-h-32 rounded-lg bg-white p-2 flex flex-col justify-end shadow-[inset_0_1px_0_rgba(255,255,255,0.95)]"
+              >
+                {village && (
+                  <span className="text-[11px] sm:text-xs font-semibold text-slate-600 leading-tight">
+                    {village}
+                  </span>
+                )}
+              </div>
+            )
+          })}
         </div>
       </CardContent>
     </Card>

@@ -387,7 +387,7 @@ const MBUM_VILLAGES = [
   "Bihnjeng",
   "Ntumbaw",
   "Nwangri",
-  "Mbaah",
+  "Mbaa",
   "Mbot",
   "Saah",
   "Sop",
@@ -426,7 +426,6 @@ const MBUM_VILLAGES = [
 
 const WARR_VILLAGES = new Set([
   "Binshua",
-  "Bongom",
   "Chup",
   "Nkambe",
   "Kungi",
@@ -445,6 +444,7 @@ const WARR_VILLAGES = new Set([
 const TANG_VILLAGES = new Set([
   "Bih",
   "Binka",
+  "Bongom",
   "Kup",
   "Ngarum",
   "Ntundip",

@@ -378,7 +378,6 @@ const MBUM_HEADER_COLORS: Record<string, string> = {
 const MBUM_VILLAGES = [
   "Mbum Villages",
   "Binshua",
-  "Bongom",
   "Chup",
   "Nkambe",
   "Kungi",
@@ -394,6 +393,7 @@ const MBUM_VILLAGES = [
   "Wat",
   "Bih",
   "Binka",
+  "Bongom",
   "Kup",
   "Ngarum",
   "Ntundip",
@@ -426,7 +426,6 @@ const MBUM_VILLAGES = [
 
 const WARR_VILLAGES = new Set([
   "Binshua",
-  "Bongom",
   "Chup",
   "Nkambe",
   "Kungi",
@@ -445,6 +444,7 @@ const WARR_VILLAGES = new Set([
 const TANG_VILLAGES = new Set([
   "Bih",
   "Binka",
+  "Bongom",
   "Kup",
   "Ngarum",
   "Ntundip",

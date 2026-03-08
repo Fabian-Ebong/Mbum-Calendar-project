@@ -387,7 +387,7 @@ const MBUM_VILLAGES = [
   "Bihnjeng",
   "Ntumbaw",
   "Nwangri",
-  "Mbaah",
+  "Mbaa",
   "Mbot",
   "Saah",
   "Sop",
